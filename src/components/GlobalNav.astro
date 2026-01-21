@@ -1,0 +1,241 @@
+---
+// Global navigation enhancements:
+// - Progress bar at top
+// - Section counter
+// - Keyboard navigation
+---
+
+<!-- Global Progress Bar -->
+<div
+  id="global-progress"
+  class="fixed top-16 left-0 right-0 h-1 z-40 bg-[var(--ctp-surface0)]"
+>
+  <div
+    id="progress-fill"
+    class="h-full bg-[var(--ctp-mauve)] transition-all duration-300 ease-out"
+    style="width: 0%;"
+  />
+</div>
+
+<!-- Section Counter -->
+<div
+  id="section-counter"
+  class="fixed bottom-8 right-8 z-50 hidden lg:flex items-center gap-2 bg-[var(--color-surface)] px-4 py-2 rounded-full border border-[var(--ctp-surface1)] shadow-lg"
+>
+  <span class="text-xs font-mono text-[var(--ctp-overlay0)] uppercase tracking-wider">Section</span>
+  <span id="counter-current" class="text-lg font-bold text-[var(--ctp-mauve)]">1</span>
+  <span class="text-[var(--ctp-overlay0)]">/</span>
+  <span id="counter-total" class="text-sm text-[var(--ctp-overlay0)]">12</span>
+</div>
+
+<!-- Keyboard Navigation Hint (shows briefly on first load) -->
+<div
+  id="keyboard-hint"
+  class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 opacity-0 transition-opacity duration-500 pointer-events-none"
+>
+  <div class="bg-[var(--color-surface)] px-4 py-2 rounded-lg border border-[var(--ctp-surface1)] shadow-lg flex items-center gap-3">
+    <div class="flex items-center gap-1">
+      <kbd class="px-2 py-1 bg-[var(--ctp-surface0)] rounded text-xs font-mono text-[var(--ctp-text)]">↑</kbd>
+      <kbd class="px-2 py-1 bg-[var(--ctp-surface0)] rounded text-xs font-mono text-[var(--ctp-text)]">↓</kbd>
+    </div>
+    <span class="text-sm text-[var(--ctp-subtext0)]">Navigate sections</span>
+  </div>
+</div>
+
+<script>
+  function initGlobalNav() {
+    // All navigable sections in order
+    const allSections = [
+      'hero',
+      'pitch', 'pitch-0', 'pitch-1', 'pitch-2', 'pitch-3', 'pitch-4',
+      'motivation', 'motivation-0', 'motivation-1', 'motivation-2',
+      'leadership', 'leadership-0', 'leadership-1', 'leadership-2'
+    ];
+
+    const totalSections = allSections.length;
+    let currentSectionIndex = 0;
+
+    const progressFill = document.getElementById('progress-fill');
+    const counterCurrent = document.getElementById('counter-current');
+    const counterTotal = document.getElementById('counter-total');
+    const sectionCounter = document.getElementById('section-counter');
+    const keyboardHint = document.getElementById('keyboard-hint');
+
+    if (counterTotal) {
+      counterTotal.textContent = totalSections.toString();
+    }
+
+    // Show keyboard hint briefly on first visit
+    const hasSeenHint = sessionStorage.getItem('keyboard-hint-seen');
+    if (!hasSeenHint && keyboardHint) {
+      setTimeout(() => {
+        keyboardHint.style.opacity = '1';
+        setTimeout(() => {
+          keyboardHint.style.opacity = '0';
+          sessionStorage.setItem('keyboard-hint-seen', 'true');
+        }, 3000);
+      }, 2000);
+    }
+
+    // Update progress and counter based on scroll
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+
+      if (progressFill) {
+        progressFill.style.width = `${Math.min(scrollPercent, 100)}%`;
+      }
+
+      // Find current section
+      let foundIndex = 0;
+      for (let i = allSections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(allSections[i]);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.4) {
+            foundIndex = i;
+            break;
+          }
+        }
+      }
+
+      currentSectionIndex = foundIndex;
+
+      if (counterCurrent) {
+        counterCurrent.textContent = (foundIndex + 1).toString();
+      }
+
+      // Update counter color based on current part
+      if (counterCurrent) {
+        if (foundIndex === 0) {
+          counterCurrent.style.color = 'var(--ctp-mauve)';
+        } else if (foundIndex >= 1 && foundIndex <= 6) {
+          counterCurrent.style.color = 'var(--ctp-teal)';
+        } else if (foundIndex >= 7 && foundIndex <= 10) {
+          counterCurrent.style.color = 'var(--ctp-blue)';
+        } else {
+          counterCurrent.style.color = 'var(--ctp-peach)';
+        }
+      }
+
+      // Show/hide counter
+      if (sectionCounter) {
+        if (scrollTop > 100) {
+          sectionCounter.style.display = 'flex';
+        } else {
+          sectionCounter.style.display = 'none';
+        }
+      }
+
+      // Update active nav link
+      updateActiveNavLink(foundIndex);
+    }
+
+    // Update active navigation link in header
+    function updateActiveNavLink(index: number) {
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => link.classList.remove('active'));
+
+      let activeLink: Element | null = null;
+      if (index >= 1 && index <= 6) {
+        activeLink = document.querySelector('.nav-link[href="#pitch"]');
+      } else if (index >= 7 && index <= 10) {
+        activeLink = document.querySelector('.nav-link[href="#motivation"]');
+      } else if (index >= 11) {
+        activeLink = document.querySelector('.nav-link[href="#leadership"]');
+      }
+
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+
+    // Keyboard navigation
+    function handleKeydown(e: KeyboardEvent) {
+      // Don't interfere with input fields
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      if (e.key === 'ArrowDown' || e.key === 'j') {
+        e.preventDefault();
+        navigateToSection(currentSectionIndex + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'k') {
+        e.preventDefault();
+        navigateToSection(currentSectionIndex - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        navigateToSection(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        navigateToSection(allSections.length - 1);
+      }
+    }
+
+    function navigateToSection(index: number) {
+      if (index < 0) index = 0;
+      if (index >= allSections.length) index = allSections.length - 1;
+
+      const targetSection = document.getElementById(allSections[index]);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Parallax effect for backgrounds
+    function updateParallax() {
+      const scrollY = window.scrollY;
+      document.documentElement.style.setProperty('--parallax-y', `${scrollY * 0.1}px`);
+    }
+
+    // Throttled scroll handler
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateProgress();
+          updateParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    // Initialize
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('keydown', handleKeydown);
+    updateProgress();
+
+    // Cleanup on page transition
+    document.addEventListener('astro:before-swap', () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('keydown', handleKeydown);
+    });
+  }
+
+  initGlobalNav();
+  document.addEventListener('astro:after-swap', initGlobalNav);
+</script>
+
+<style>
+  /* Active nav link style */
+  :global(.nav-link.active) {
+    color: var(--ctp-mauve) !important;
+  }
+
+  :global(.nav-link.active::after) {
+    width: 100% !important;
+    background: var(--ctp-mauve) !important;
+  }
+
+  /* Keyboard hint animation */
+  #keyboard-hint {
+    animation: float 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-5px); }
+  }
+</style>

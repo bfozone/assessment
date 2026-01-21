@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Pitch from "../components/Pitch.astro";
+import Motivation from "../components/Motivation.astro";
+import Leadership from "../components/Leadership.astro";
+import Footer from "../components/Footer.astro";
+import GlobalNav from "../components/GlobalNav.astro";
+import BackToTop from "../components/BackToTop.astro";
+---
+
+<Layout
+  title="Self-Presentation & Leadership Profile"
+  description="Leadership Assessment - Self-presentation with 5x5 Pitch, Motivation, and Leadership Philosophy"
+>
+  <Header />
+  <GlobalNav />
+  <main id="main-content">
+    <Hero />
+    <Pitch />
+    <Motivation />
+    <Leadership />
+  </main>
+  <Footer />
+  <BackToTop />
+</Layout>

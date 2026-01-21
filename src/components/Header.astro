@@ -1,0 +1,104 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const navItems = [
+  { href: "#pitch", label: "pitch" },
+  { href: "#motivation", label: "motivation" },
+  { href: "#leadership", label: "leadership" },
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-md border-b border-[var(--color-border)]"
+>
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo/Title -->
+      <a
+        href="#"
+        class="font-mono text-sm font-semibold text-[var(--ctp-mauve)] hover:text-[var(--ctp-pink)] transition-colors"
+      >
+        Leadership Profile
+      </a>
+
+      <!-- Navigation -->
+      <div class="hidden sm:flex items-center gap-8">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class="nav-link text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Theme Toggle -->
+      <div class="flex items-center gap-4">
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="sm:hidden p-2 rounded-lg hover:bg-[var(--ctp-surface0)] transition-colors"
+          aria-label="Menu"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="sm:hidden hidden pb-4 border-t border-[var(--color-border)] mt-2 pt-4"
+    >
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="block py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<script>
+  function initMobileMenu() {
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (!menuBtn || menuBtn.dataset.bound === "true") return;
+    menuBtn.dataset.bound = "true";
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu?.classList.toggle("hidden");
+    });
+
+    // Close menu when clicking a link
+    mobileMenu?.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+      });
+    });
+  }
+
+  initMobileMenu();
+  document.addEventListener("astro:after-swap", initMobileMenu);
+</script>

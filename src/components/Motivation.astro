@@ -1,0 +1,330 @@
+---
+import { presentationData } from "../data/presentation";
+
+const { motivation } = presentationData;
+
+const sections = [
+  {
+    id: "motivation-0",
+    title: "What motivates me for this position?",
+    subtitle: "The drive behind my ambition",
+    items: motivation.position,
+    color: "var(--ctp-green)",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    id: "motivation-1",
+    title: "What are my expectations & wishes?",
+    subtitle: "What I hope to find and achieve",
+    items: motivation.expectations,
+    color: "var(--ctp-blue)",
+    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    id: "motivation-2",
+    title: "Challenges & what could speak against me?",
+    subtitle: "Honest reflection on potential obstacles",
+    items: motivation.challenges,
+    color: "var(--ctp-peach)",
+    icon: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z",
+  },
+];
+---
+
+<!-- Progress Indicator (right side) -->
+<div id="motivation-progress" class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-3">
+  {sections.map((section, index) => (
+    <button
+      class="motivation-progress-dot group relative w-3 h-3 rounded-full bg-[var(--ctp-surface2)] transition-all duration-300 hover:bg-[var(--ctp-overlay0)]"
+      data-index={index}
+      aria-label={`Go to ${section.title}`}
+    >
+      <span
+        class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm text-[var(--color-text-muted)] bg-[var(--color-surface)] px-2 py-1 rounded"
+      >
+        Question {index + 1}
+      </span>
+    </button>
+  ))}
+</div>
+
+<!-- Fixed Scroll Arrow (bottom center) -->
+<a
+  id="motivation-scroll-arrow"
+  href="#motivation-0"
+  class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 hidden text-[var(--ctp-overlay0)] hover:text-[var(--ctp-mauve)] transition-all duration-300 hover:scale-110"
+  aria-label="Scroll to next section"
+>
+  <svg class="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+  </svg>
+</a>
+
+<!-- Fixed arrow for Motivation Header -->
+<a
+  id="motivation-header-arrow"
+  href="#motivation-0"
+  class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 hidden text-[var(--ctp-overlay0)] hover:text-[var(--ctp-mauve)] transition-all duration-300 hover:scale-110"
+  aria-label="Start exploring motivation"
+>
+  <svg class="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+  </svg>
+</a>
+
+<!-- Section Header (Full Screen) -->
+<section id="motivation" class="min-h-[calc(100dvh-4rem)] flex items-center justify-center px-4 scroll-mt-16">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4">
+      Part Two
+    </p>
+    <h3 class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6">
+      My Motivation
+    </h3>
+    <p class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
+      What drives me, what I expect, and where I see challenges
+    </p>
+  </div>
+</section>
+
+<!-- Motivation Sections (Centered Statement Layout) -->
+{sections.map((section, index) => (
+  <section
+    class="motivation-section min-h-[calc(100dvh-4rem)] flex items-center justify-center px-4 py-12 lg:py-16 relative scroll-mt-16"
+    data-index={index}
+    id={section.id}
+  >
+    <!-- Background accent -->
+    <div
+      class="absolute inset-0 opacity-0 transition-opacity duration-1000 pointer-events-none"
+      style={`background: radial-gradient(ellipse at 50% 50%, ${section.color}10, transparent 70%);`}
+      data-bg
+    />
+
+    <!-- Centered content -->
+    <div class="max-w-3xl mx-auto w-full relative text-center">
+
+      <!-- Question indicator -->
+      <div class="motivation-content opacity-0 translate-y-8 transition-all duration-700 ease-out">
+        <div class="inline-flex items-center gap-2 mb-6">
+          <div
+            class="w-10 h-10 rounded-full flex items-center justify-center"
+            style={`background-color: ${section.color}20;`}
+          >
+            <svg
+              class="w-5 h-5"
+              style={`color: ${section.color};`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d={section.icon} />
+            </svg>
+          </div>
+          <span class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider">
+            Question {index + 1} of 3
+          </span>
+        </div>
+
+        <!-- Main question - large typography -->
+        <h3
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 leading-tight"
+          style={`color: ${section.color};`}
+        >
+          {section.title}
+        </h3>
+
+        <!-- Subtitle -->
+        <p class="text-base lg:text-lg text-[var(--color-text-muted)] italic mb-12">
+          {section.subtitle}
+        </p>
+      </div>
+
+      <!-- Statement cards - stacked, centered -->
+      <div class="space-y-4 max-w-2xl mx-auto">
+        {section.items.map((item, itemIndex) => (
+          <div
+            class="motivation-item opacity-0 translate-y-4 transition-all duration-500"
+            style={`transition-delay: ${itemIndex * 100 + 200}ms;`}
+          >
+            <div
+              class="bg-[var(--color-surface)] rounded-xl border-l-4 p-5 lg:p-6 text-left shadow-sm hover:shadow-md transition-shadow"
+              style={`border-color: ${section.color};`}
+            >
+              <div class="flex items-start gap-4">
+                <span
+                  class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm"
+                  style={`background-color: ${section.color};`}
+                >
+                  {itemIndex + 1}
+                </span>
+                <p class="text-base lg:text-lg text-[var(--color-text)] leading-relaxed pt-1">
+                  {item}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+))}
+
+<style>
+  .motivation-section.in-view .motivation-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .motivation-section.in-view .motivation-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .motivation-section.in-view [data-bg] {
+    opacity: 1;
+  }
+
+  .motivation-progress-dot.active {
+    width: 0.75rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+  }
+</style>
+
+<script>
+  function initMotivationScrolling() {
+    const sections = document.querySelectorAll('.motivation-section');
+    const progressDots = document.querySelectorAll('.motivation-progress-dot');
+    const progressContainer = document.getElementById('motivation-progress');
+    const scrollArrow = document.getElementById('motivation-scroll-arrow');
+    const headerArrow = document.getElementById('motivation-header-arrow');
+    const motivationHeader = document.getElementById('motivation');
+
+    if (!sections.length) return;
+
+    // Header arrow visibility - show when motivation header is visible, hide when entering sections
+    if (motivationHeader && headerArrow) {
+      const headerObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              headerArrow.style.display = 'block';
+            } else {
+              headerArrow.style.display = 'none';
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      headerObserver.observe(motivationHeader);
+    }
+
+    // Intersection Observer for sections
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+
+            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+
+            // Update progress dots
+            const colors = ['var(--ctp-green)', 'var(--ctp-blue)', 'var(--ctp-peach)'];
+            progressDots.forEach((dot, i) => {
+              dot.classList.toggle('active', i === index);
+              if (i === index) {
+                (dot as HTMLElement).style.backgroundColor = colors[i];
+              } else {
+                (dot as HTMLElement).style.backgroundColor = '';
+              }
+            });
+
+            // Update scroll arrow href
+            if (scrollArrow) {
+              const nextIndex = index + 1;
+              if (nextIndex < sections.length) {
+                scrollArrow.setAttribute('href', `#motivation-${nextIndex}`);
+              } else {
+                scrollArrow.setAttribute('href', '#leadership');
+              }
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '-20% 0px -20% 0px'
+      }
+    );
+
+    sections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+
+    // Show/hide navigation elements
+    const lastSection = sections[sections.length - 1];
+    const firstSection = sections[0];
+
+    // Only show when entering actual motivation sections (not header)
+    const showObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (scrollArrow) scrollArrow.style.display = 'block';
+            if (progressContainer) progressContainer.style.display = 'flex';
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sections.forEach((section) => showObserver.observe(section));
+
+    // Hide when past last section
+    const hideObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+            if (scrollArrow) scrollArrow.style.display = 'none';
+            if (progressContainer) progressContainer.style.display = 'none';
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+
+    if (lastSection) hideObserver.observe(lastSection);
+
+    // Hide when above first motivation section (scrolled back up)
+    const hideAboveObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+            if (scrollArrow) scrollArrow.style.display = 'none';
+            if (progressContainer) progressContainer.style.display = 'none';
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+
+    if (firstSection) hideAboveObserver.observe(firstSection);
+
+    // Click to navigate (progress dots)
+    progressDots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = dot.getAttribute('data-index');
+        const targetSection = document.querySelector(`.motivation-section[data-index="${index}"]`);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  initMotivationScrolling();
+  document.addEventListener('astro:after-swap', initMotivationScrolling);
+</script>

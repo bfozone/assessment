@@ -1,0 +1,50 @@
+---
+import { presentationData } from "../data/presentation";
+
+const { hero } = presentationData;
+---
+
+<section
+  id="hero"
+  class="min-h-screen flex items-center justify-center pt-16 px-4"
+>
+  <div class="max-w-4xl mx-auto text-center">
+    <!-- Title -->
+    <h1
+      class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6"
+    >
+      {hero.title}
+    </h1>
+
+    <!-- Subtitle -->
+    <p
+      class="fade-in font-mono text-lg sm:text-xl text-[var(--ctp-mauve)] mb-12"
+      style="transition-delay: 100ms;"
+    >
+      {hero.subtitle}
+    </p>
+
+    <!-- Scroll indicator -->
+    <div class="fade-in mt-16" style="transition-delay: 300ms;">
+      <a
+        href="#pitch"
+        class="inline-flex flex-col items-center text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
+        aria-label="Scroll to content"
+      >
+        <span class="text-sm mb-2">Explore</span>
+        <svg
+          class="w-6 h-6 animate-bounce"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
