@@ -1,7 +1,10 @@
 ---
-import { presentationData } from "../data/presentation";
+import { presentations, labels } from "../data/presentation";
 
-const { hero } = presentationData;
+const heroDE = presentations.de.hero;
+const heroEN = presentations.en.hero;
+const labelsDE = labels.de.hero;
+const labelsEN = labels.en.hero;
 ---
 
 <section
@@ -9,29 +12,53 @@ const { hero } = presentationData;
   class="min-h-[calc(100vh-4rem)] flex items-center justify-center pt-16 px-4"
 >
   <div class="max-w-4xl mx-auto text-center">
+    <!-- Name -->
+    <p
+      class="fade-in font-mono text-lg text-[var(--ctp-mauve)] mb-4"
+      data-i18n="hero-name"
+      data-de={heroDE.name}
+      data-en={heroEN.name}
+    >
+      {heroDE.name}
+    </p>
+
     <!-- Title -->
     <h1
       class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6"
+      style="transition-delay: 100ms;"
+      data-i18n="hero-title"
+      data-de={heroDE.title}
+      data-en={heroEN.title}
     >
-      {hero.title}
+      {heroDE.title}
     </h1>
 
     <!-- Subtitle -->
     <p
-      class="fade-in font-mono text-lg sm:text-xl text-[var(--ctp-mauve)] mb-12"
-      style="transition-delay: 100ms;"
+      class="fade-in text-lg sm:text-xl text-[var(--color-text-muted)] mb-12"
+      style="transition-delay: 200ms;"
+      data-i18n="hero-subtitle"
+      data-de={heroDE.subtitle}
+      data-en={heroEN.subtitle}
     >
-      {hero.subtitle}
+      {heroDE.subtitle}
     </p>
 
     <!-- Scroll indicator -->
-    <div class="fade-in mt-16" style="transition-delay: 300ms;">
+    <div class="fade-in mt-16" style="transition-delay: 400ms;">
       <a
         href="#pitch"
         class="inline-flex flex-col items-center text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
         aria-label="Scroll to content"
       >
-        <span class="text-sm mb-2">Explore</span>
+        <span
+          class="text-sm mb-2"
+          data-i18n="hero-scroll"
+          data-de={labelsDE.scrollPrompt}
+          data-en={labelsEN.scrollPrompt}
+        >
+          {labelsDE.scrollPrompt}
+        </span>
         <svg
           class="w-6 h-6 animate-bounce"
           fill="none"
@@ -48,3 +75,35 @@ const { hero } = presentationData;
     </div>
   </div>
 </section>
+
+<script>
+  function initHeroI18n() {
+    const STORAGE_KEY = "presentation-language";
+
+    function getLanguage(): "de" | "en" {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored === "en" ? "en" : "de";
+    }
+
+    function updateContent(lang: "de" | "en") {
+      document.querySelectorAll("[data-i18n^='hero-']").forEach((el) => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    // Initialize
+    updateContent(getLanguage());
+
+    // Listen for language changes
+    window.addEventListener("languageChange", (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.language) {
+        updateContent(detail.language);
+      }
+    });
+  }
+
+  initHeroI18n();
+  document.addEventListener("astro:after-swap", initHeroI18n);
+</script>

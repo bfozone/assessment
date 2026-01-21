@@ -1,16 +1,10 @@
 ---
-import { presentationData, colorMap } from "../data/presentation";
+import { presentations, labels, colorMap } from "../data/presentation";
 
-const { pitch } = presentationData;
-
-// Narrative subtitles for each journey step
-const narratives = [
-  "The foundation of who I am",
-  "The moments that shaped me",
-  "Where I create the most impact",
-  "My path of continuous growth",
-  "The compass that guides my decisions",
-];
+const pitchDE = presentations.de.pitch;
+const pitchEN = presentations.en.pitch;
+const labelsDE = labels.de.pitch;
+const labelsEN = labels.en.pitch;
 
 // Icons for each category
 const icons = [
@@ -24,14 +18,16 @@ const icons = [
 
 <!-- Progress Indicator (right side) -->
 <div id="pitch-progress" class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-3">
-  {pitch.map((category, index) => (
+  {pitchDE.map((category, index) => (
     <button
       class="progress-dot group relative w-3 h-3 rounded-full bg-[var(--ctp-surface2)] transition-all duration-300 hover:bg-[var(--ctp-overlay0)]"
       data-index={index}
+      data-title-de={category.title}
+      data-title-en={pitchEN[index].title}
       aria-label={`Go to ${category.title}`}
     >
       <span
-        class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm text-[var(--color-text-muted)] bg-[var(--color-surface)] px-2 py-1 rounded"
+        class="progress-tooltip absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm text-[var(--color-text-muted)] bg-[var(--color-surface)] px-2 py-1 rounded"
       >
         {category.title}
       </span>
@@ -66,20 +62,35 @@ const icons = [
 <!-- Section Header (Full Screen) -->
 <section id="pitch" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 scroll-mt-16">
   <div class="max-w-4xl mx-auto text-center">
-    <p class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4">
-      Part One
+    <p
+      class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4"
+      data-i18n="pitch-part"
+      data-de={labelsDE.partLabel}
+      data-en={labelsEN.partLabel}
+    >
+      {labelsDE.partLabel}
     </p>
-    <h3 class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6">
-      5 x 5 Pitch
+    <h3
+      class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6"
+      data-i18n="pitch-title"
+      data-de={labelsDE.title}
+      data-en={labelsEN.title}
+    >
+      {labelsDE.title}
     </h3>
-    <p class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
-      Five dimensions that define who I am — scroll to explore each one
+    <p
+      class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto"
+      data-i18n="pitch-subtitle"
+      data-de={labelsDE.subtitle}
+      data-en={labelsEN.subtitle}
+    >
+      {labelsDE.subtitle}
     </p>
   </div>
 </section>
 
 <!-- Journey Sections -->
-{pitch.map((category, index) => (
+{pitchDE.map((category, index) => (
   <section
     class="pitch-section min-h-[75vh] flex items-center px-4 py-8 lg:py-12 relative scroll-mt-16"
     data-index={index}
@@ -107,11 +118,21 @@ const icons = [
                 {index + 1}
               </span>
               <div>
-                <p class="text-[10px] lg:text-xs font-mono text-[var(--ctp-overlay0)] uppercase tracking-wider">
-                  Dimension {index + 1} of 5
+                <p
+                  class="text-[10px] lg:text-xs font-mono text-[var(--ctp-overlay0)] uppercase tracking-wider"
+                  data-i18n={`pitch-dim-${index}`}
+                  data-de={`${labelsDE.dimensionLabel} ${index + 1} von 5`}
+                  data-en={`${labelsEN.dimensionLabel} ${index + 1} of 5`}
+                >
+                  {labelsDE.dimensionLabel} {index + 1} von 5
                 </p>
-                <p class="text-xs lg:text-sm text-[var(--color-text-muted)] italic">
-                  {narratives[index]}
+                <p
+                  class="text-xs lg:text-sm text-[var(--color-text-muted)] italic"
+                  data-i18n={`pitch-narr-${index}`}
+                  data-de={labelsDE.narratives[index]}
+                  data-en={labelsEN.narratives[index]}
+                >
+                  {labelsDE.narratives[index]}
                 </p>
               </div>
             </div>
@@ -120,12 +141,20 @@ const icons = [
             <h3
               class="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 lg:mb-3 transition-colors"
               style={`color: ${colorMap[category.color]};`}
+              data-i18n={`pitch-cat-title-${index}`}
+              data-de={category.title}
+              data-en={pitchEN[index].title}
             >
               {category.title}
             </h3>
 
             <!-- Question -->
-            <p class="text-base sm:text-lg lg:text-2xl text-[var(--color-text-muted)]">
+            <p
+              class="text-base sm:text-lg lg:text-2xl text-[var(--color-text-muted)]"
+              data-i18n={`pitch-cat-q-${index}`}
+              data-de={category.question}
+              data-en={pitchEN[index].question}
+            >
               {category.question}
             </p>
 
@@ -157,9 +186,23 @@ const icons = [
                     style={`background-color: ${colorMap[category.color]};`}
                   />
                   <div>
-                    <span class="font-semibold text-sm lg:text-base text-[var(--color-text)]">{item.point}</span>
+                    <span
+                      class="pitch-item-point font-semibold text-sm lg:text-base text-[var(--color-text)]"
+                      data-i18n={`pitch-item-point-${index}-${itemIndex}`}
+                      data-de={item.point}
+                      data-en={pitchEN[index].items[itemIndex]?.point || item.point}
+                    >
+                      {item.point}
+                    </span>
                     {item.detail && (
-                      <p class="text-xs lg:text-sm text-[var(--ctp-subtext0)] mt-0.5">{item.detail}</p>
+                      <p
+                        class="pitch-item-detail text-xs lg:text-sm text-[var(--ctp-subtext0)] mt-0.5"
+                        data-i18n={`pitch-item-detail-${index}-${itemIndex}`}
+                        data-de={item.detail}
+                        data-en={pitchEN[index].items[itemIndex]?.detail || item.detail}
+                      >
+                        {item.detail}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -339,6 +382,47 @@ const icons = [
     });
   }
 
+  function initPitchI18n() {
+    const STORAGE_KEY = "presentation-language";
+
+    function getLanguage(): "de" | "en" {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored === "en" ? "en" : "de";
+    }
+
+    function updateContent(lang: "de" | "en") {
+      // Update all i18n elements
+      document.querySelectorAll("[data-i18n^='pitch-']").forEach((el) => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+
+      // Update progress dot tooltips
+      document.querySelectorAll(".progress-dot").forEach((dot) => {
+        const tooltip = dot.querySelector(".progress-tooltip");
+        if (tooltip) {
+          const title = dot.getAttribute(`data-title-${lang}`);
+          if (title) tooltip.textContent = title;
+        }
+      });
+    }
+
+    // Initialize
+    updateContent(getLanguage());
+
+    // Listen for language changes
+    window.addEventListener("languageChange", (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.language) {
+        updateContent(detail.language);
+      }
+    });
+  }
+
   initPitchScrolling();
-  document.addEventListener('astro:after-swap', initPitchScrolling);
+  initPitchI18n();
+  document.addEventListener('astro:after-swap', () => {
+    initPitchScrolling();
+    initPitchI18n();
+  });
 </script>

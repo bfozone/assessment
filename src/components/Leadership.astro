@@ -1,31 +1,54 @@
 ---
-import { presentationData } from "../data/presentation";
+import { presentations, labels } from "../data/presentation";
 
-const { leadership } = presentationData;
+const leadershipDE = presentations.de.leadership;
+const leadershipEN = presentations.en.leadership;
+const labelsDE = labels.de.leadership;
+const labelsEN = labels.en.leadership;
 
 // Section definitions for scrollytelling
 const sections = [
   {
     id: "leadership-0",
-    title: "My Leadership Principles",
-    subtitle: "The beliefs that guide how I lead",
+    titleDE: labelsDE.sections.principles.title,
+    titleEN: labelsEN.sections.principles.title,
+    subtitleDE: labelsDE.sections.principles.subtitle,
+    subtitleEN: labelsEN.sections.principles.subtitle,
     color: "var(--ctp-mauve)",
     icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
   },
   {
     id: "leadership-1",
-    title: "What Attracts Me to Leadership",
-    subtitle: "The drive behind taking responsibility",
+    titleDE: labelsDE.sections.appeal.title,
+    titleEN: labelsEN.sections.appeal.title,
+    subtitleDE: labelsDE.sections.appeal.subtitle,
+    subtitleEN: labelsEN.sections.appeal.subtitle,
     color: "var(--ctp-green)",
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
   },
   {
     id: "leadership-2",
-    title: "Leadership Styles I Don't Identify With",
-    subtitle: "Honest reflection on what doesn't fit",
+    titleDE: labelsDE.sections.notMyStyle.title,
+    titleEN: labelsEN.sections.notMyStyle.title,
+    subtitleDE: labelsDE.sections.notMyStyle.subtitle,
+    subtitleEN: labelsEN.sections.notMyStyle.subtitle,
     color: "var(--ctp-peach)",
     icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636",
   },
+];
+
+// Static text for the contrast section
+const believeItemsDE = [
+  "Teams mit Vertrauen und Autonomie stärken",
+  "Klare Richtung mit Raum für Initiative",
+  "Offener Dialog und gegenseitiges Feedback",
+  "Ergebnisse durch Zusammenarbeit",
+];
+const believeItemsEN = [
+  "Empower teams with trust and autonomy",
+  "Clear direction with room for initiative",
+  "Open dialogue and mutual feedback",
+  "Results through collaboration",
 ];
 ---
 
@@ -35,12 +58,15 @@ const sections = [
     <button
       class="leadership-progress-dot group relative w-3 h-3 rounded-full bg-[var(--ctp-surface2)] transition-all duration-300 hover:bg-[var(--ctp-overlay0)]"
       data-index={index}
-      aria-label={`Go to ${section.title}`}
+      aria-label={`Go to ${section.titleDE}`}
     >
       <span
-        class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm text-[var(--color-text-muted)] bg-[var(--color-surface)] px-2 py-1 rounded"
+        class="leadership-tooltip absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm text-[var(--color-text-muted)] bg-[var(--color-surface)] px-2 py-1 rounded"
+        data-i18n={`lead-tooltip-${index}`}
+        data-de={`${labelsDE.questionLabel} ${index + 1}`}
+        data-en={`${labelsEN.questionLabel} ${index + 1}`}
       >
-        {section.title.split(' ').slice(0, 3).join(' ')}
+        {labelsDE.questionLabel} {index + 1}
       </span>
     </button>
   ))}
@@ -73,14 +99,29 @@ const sections = [
 <!-- Section Header (Full Screen) -->
 <section id="leadership" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 scroll-mt-16">
   <div class="max-w-4xl mx-auto text-center">
-    <p class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4">
-      Part Three
+    <p
+      class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4"
+      data-i18n="lead-part"
+      data-de={labelsDE.partLabel}
+      data-en={labelsEN.partLabel}
+    >
+      {labelsDE.partLabel}
     </p>
-    <h3 class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6">
-      My Leadership
+    <h3
+      class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6"
+      data-i18n="lead-title"
+      data-de={labelsDE.title}
+      data-en={labelsEN.title}
+    >
+      {labelsDE.title}
     </h3>
-    <p class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
-      Principles I believe in, what drives me, and an honest look at what doesn't fit
+    <p
+      class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto"
+      data-i18n="lead-subtitle"
+      data-de={labelsDE.subtitle}
+      data-en={labelsEN.subtitle}
+    >
+      {labelsDE.subtitle}
     </p>
   </div>
 </section>
@@ -117,21 +158,37 @@ const sections = [
             <path stroke-linecap="round" stroke-linejoin="round" d={sections[0].icon} />
           </svg>
         </div>
-        <span class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider">
-          Section 1 of 3
+        <span
+          class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider"
+          data-i18n="lead-sec0-label"
+          data-de={`${labelsDE.questionLabel} 1 von 3`}
+          data-en={`${labelsEN.questionLabel} 1 of 3`}
+        >
+          {labelsDE.questionLabel} 1 von 3
         </span>
       </div>
-      <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3" style="color: var(--ctp-mauve);">
-        {sections[0].title}
+      <h3
+        class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3"
+        style="color: var(--ctp-mauve);"
+        data-i18n="lead-sec0-title"
+        data-de={sections[0].titleDE}
+        data-en={sections[0].titleEN}
+      >
+        {sections[0].titleDE}
       </h3>
-      <p class="text-base lg:text-lg text-[var(--color-text-muted)] italic">
-        {sections[0].subtitle}
+      <p
+        class="text-base lg:text-lg text-[var(--color-text-muted)] italic"
+        data-i18n="lead-sec0-sub"
+        data-de={sections[0].subtitleDE}
+        data-en={sections[0].subtitleEN}
+      >
+        {sections[0].subtitleDE}
       </p>
     </div>
 
     <!-- Manifesto Principles -->
     <div class="space-y-6">
-      {leadership.principles.map((principle, index) => (
+      {leadershipDE.principles.map((principle, index) => (
         <div
           class="leadership-item manifesto-item opacity-0 translate-y-4 transition-all duration-500"
           style={`transition-delay: ${index * 150 + 200}ms;`}
@@ -144,7 +201,12 @@ const sections = [
             >
               "
             </span>
-            <p class="text-xl sm:text-2xl lg:text-3xl font-semibold text-[var(--color-text)] leading-relaxed">
+            <p
+              class="text-xl sm:text-2xl lg:text-3xl font-semibold text-[var(--color-text)] leading-relaxed"
+              data-i18n={`lead-principle-${index}`}
+              data-de={principle}
+              data-en={leadershipEN.principles[index] || principle}
+            >
               {principle}
             </p>
           </div>
@@ -158,9 +220,21 @@ const sections = [
       style="transition-delay: 950ms;"
     >
       <div class="bg-[var(--color-surface)] rounded-2xl p-6 lg:p-8 border-l-4" style="border-color: var(--ctp-mauve);">
-        <p class="text-sm font-mono text-[var(--ctp-mauve)] uppercase tracking-wider mb-3">My Leadership Style</p>
-        <p class="text-base lg:text-lg text-[var(--color-text)] leading-relaxed italic">
-          "{leadership.style}"
+        <p
+          class="text-sm font-mono text-[var(--ctp-mauve)] uppercase tracking-wider mb-3"
+          data-i18n="lead-style-label"
+          data-de={labelsDE.sections.style.title}
+          data-en={labelsEN.sections.style.title}
+        >
+          {labelsDE.sections.style.title}
+        </p>
+        <p
+          class="text-base lg:text-lg text-[var(--color-text)] leading-relaxed italic"
+          data-i18n="lead-style-text"
+          data-de={`"${leadershipDE.style}"`}
+          data-en={`"${leadershipEN.style}"`}
+        >
+          "{leadershipDE.style}"
         </p>
       </div>
     </div>
@@ -199,21 +273,37 @@ const sections = [
             <path stroke-linecap="round" stroke-linejoin="round" d={sections[1].icon} />
           </svg>
         </div>
-        <span class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider">
-          Section 2 of 3
+        <span
+          class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider"
+          data-i18n="lead-sec1-label"
+          data-de={`${labelsDE.questionLabel} 2 von 3`}
+          data-en={`${labelsEN.questionLabel} 2 of 3`}
+        >
+          {labelsDE.questionLabel} 2 von 3
         </span>
       </div>
-      <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3" style="color: var(--ctp-green);">
-        {sections[1].title}
+      <h3
+        class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3"
+        style="color: var(--ctp-green);"
+        data-i18n="lead-sec1-title"
+        data-de={sections[1].titleDE}
+        data-en={sections[1].titleEN}
+      >
+        {sections[1].titleDE}
       </h3>
-      <p class="text-base lg:text-lg text-[var(--color-text-muted)] italic">
-        {sections[1].subtitle}
+      <p
+        class="text-base lg:text-lg text-[var(--color-text-muted)] italic"
+        data-i18n="lead-sec1-sub"
+        data-de={sections[1].subtitleDE}
+        data-en={sections[1].subtitleEN}
+      >
+        {sections[1].subtitleDE}
       </p>
     </div>
 
     <!-- Appeal Items - Large Statement Blocks -->
     <div class="grid gap-4 lg:gap-6">
-      {leadership.appeal.map((item, index) => (
+      {leadershipDE.appeal.map((item, index) => (
         <div
           class="leadership-item opacity-0 translate-y-4 transition-all duration-500"
           style={`transition-delay: ${index * 150 + 200}ms;`}
@@ -228,7 +318,12 @@ const sections = [
               >
                 {index + 1}
               </span>
-              <p class="text-lg sm:text-xl lg:text-2xl font-medium text-[var(--color-text)]">
+              <p
+                class="text-lg sm:text-xl lg:text-2xl font-medium text-[var(--color-text)]"
+                data-i18n={`lead-appeal-${index}`}
+                data-de={item}
+                data-en={leadershipEN.appeal[index] || item}
+              >
                 {item}
               </p>
             </div>
@@ -271,15 +366,31 @@ const sections = [
             <path stroke-linecap="round" stroke-linejoin="round" d={sections[2].icon} />
           </svg>
         </div>
-        <span class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider">
-          Section 3 of 3
+        <span
+          class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider"
+          data-i18n="lead-sec2-label"
+          data-de={`${labelsDE.questionLabel} 3 von 3`}
+          data-en={`${labelsEN.questionLabel} 3 of 3`}
+        >
+          {labelsDE.questionLabel} 3 von 3
         </span>
       </div>
-      <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3" style="color: var(--ctp-peach);">
-        {sections[2].title}
+      <h3
+        class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3"
+        style="color: var(--ctp-peach);"
+        data-i18n="lead-sec2-title"
+        data-de={sections[2].titleDE}
+        data-en={sections[2].titleEN}
+      >
+        {sections[2].titleDE}
       </h3>
-      <p class="text-base lg:text-lg text-[var(--color-text-muted)] italic">
-        {sections[2].subtitle}
+      <p
+        class="text-base lg:text-lg text-[var(--color-text-muted)] italic"
+        data-i18n="lead-sec2-sub"
+        data-de={sections[2].subtitleDE}
+        data-en={sections[2].subtitleEN}
+      >
+        {sections[2].subtitleDE}
       </p>
     </div>
 
@@ -297,25 +408,29 @@ const sections = [
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h4 class="text-xl lg:text-2xl font-bold text-[var(--ctp-green)]">What I Believe In</h4>
+            <h4
+              class="text-xl lg:text-2xl font-bold text-[var(--ctp-green)]"
+              data-i18n="lead-believe-title"
+              data-de="Woran ich glaube"
+              data-en="What I believe in"
+            >
+              Woran ich glaube
+            </h4>
           </div>
           <ul class="space-y-4">
-            <li class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-[var(--ctp-green)] mt-2 flex-shrink-0"></span>
-              <span class="text-base lg:text-lg text-[var(--color-text)]">Empowering teams with trust and autonomy</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-[var(--ctp-green)] mt-2 flex-shrink-0"></span>
-              <span class="text-base lg:text-lg text-[var(--color-text)]">Clear direction with room for initiative</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-[var(--ctp-green)] mt-2 flex-shrink-0"></span>
-              <span class="text-base lg:text-lg text-[var(--color-text)]">Open dialogue and mutual feedback</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-[var(--ctp-green)] mt-2 flex-shrink-0"></span>
-              <span class="text-base lg:text-lg text-[var(--color-text)]">Results through collaboration</span>
-            </li>
+            {believeItemsDE.map((item, index) => (
+              <li class="flex items-start gap-3">
+                <span class="w-2 h-2 rounded-full bg-[var(--ctp-green)] mt-2 flex-shrink-0"></span>
+                <span
+                  class="text-base lg:text-lg text-[var(--color-text)]"
+                  data-i18n={`lead-believe-${index}`}
+                  data-de={item}
+                  data-en={believeItemsEN[index]}
+                >
+                  {item}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -332,13 +447,34 @@ const sections = [
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h4 class="text-xl lg:text-2xl font-bold text-[var(--ctp-peach)]">What Doesn't Fit</h4>
+            <h4
+              class="text-xl lg:text-2xl font-bold text-[var(--ctp-peach)]"
+              data-i18n="lead-notfit-title"
+              data-de="Was nicht passt"
+              data-en="What doesn't fit"
+            >
+              Was nicht passt
+            </h4>
           </div>
           <ul class="space-y-5">
-            {leadership.notMyStyle.map((item) => (
+            {leadershipDE.notMyStyle.map((item, index) => (
               <li class="border-b border-[var(--ctp-surface1)] pb-4 last:border-0 last:pb-0">
-                <p class="font-semibold text-base lg:text-lg text-[var(--color-text)] mb-1">{item.style}</p>
-                <p class="text-sm lg:text-base text-[var(--ctp-subtext0)]">{item.reason}</p>
+                <p
+                  class="font-semibold text-base lg:text-lg text-[var(--color-text)] mb-1"
+                  data-i18n={`lead-notfit-style-${index}`}
+                  data-de={item.style}
+                  data-en={leadershipEN.notMyStyle[index]?.style || item.style}
+                >
+                  {item.style}
+                </p>
+                <p
+                  class="text-sm lg:text-base text-[var(--ctp-subtext0)]"
+                  data-i18n={`lead-notfit-reason-${index}`}
+                  data-de={item.reason}
+                  data-en={leadershipEN.notMyStyle[index]?.reason || item.reason}
+                >
+                  {item.reason}
+                </p>
               </li>
             ))}
           </ul>
@@ -526,6 +662,37 @@ const sections = [
     });
   }
 
+  function initLeadershipI18n() {
+    const STORAGE_KEY = "presentation-language";
+
+    function getLanguage(): "de" | "en" {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored === "en" ? "en" : "de";
+    }
+
+    function updateContent(lang: "de" | "en") {
+      document.querySelectorAll("[data-i18n^='lead-']").forEach((el) => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    // Initialize
+    updateContent(getLanguage());
+
+    // Listen for language changes
+    window.addEventListener("languageChange", (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.language) {
+        updateContent(detail.language);
+      }
+    });
+  }
+
   initLeadershipScrolling();
-  document.addEventListener('astro:after-swap', initLeadershipScrolling);
+  initLeadershipI18n();
+  document.addEventListener('astro:after-swap', () => {
+    initLeadershipScrolling();
+    initLeadershipI18n();
+  });
 </script>

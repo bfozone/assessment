@@ -1,10 +1,15 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import LanguageToggle from "./LanguageToggle.astro";
+import { labels } from "../data/presentation";
+
+const labelsDE = labels.de;
+const labelsEN = labels.en;
 
 const navItems = [
-  { href: "#pitch", label: "pitch" },
-  { href: "#motivation", label: "motivation" },
-  { href: "#leadership", label: "leadership" },
+  { href: "#pitch", labelDE: labelsDE.nav.pitch, labelEN: labelsEN.nav.pitch },
+  { href: "#motivation", labelDE: labelsDE.nav.motivation, labelEN: labelsEN.nav.motivation },
+  { href: "#leadership", labelDE: labelsDE.nav.leadership, labelEN: labelsEN.nav.leadership },
 ];
 ---
 
@@ -18,7 +23,7 @@ const navItems = [
         href="#"
         class="font-mono text-sm font-semibold text-[var(--ctp-mauve)] hover:text-[var(--ctp-pink)] transition-colors"
       >
-        Leadership Profile
+        Benjamin Fink
       </a>
 
       <!-- Navigation -->
@@ -28,15 +33,17 @@ const navItems = [
             <a
               href={item.href}
               class="nav-link text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+              data-label-de={item.labelDE}
+              data-label-en={item.labelEN}
             >
-              {item.label}
+              <span class="nav-text">{item.labelDE}</span>
             </a>
           ))
         }
       </div>
 
-      <!-- Theme Toggle -->
-      <div class="flex items-center gap-4">
+      <!-- Controls -->
+      <div class="flex items-center gap-2">
         <!-- Mobile Menu Button -->
         <button
           id="mobile-menu-btn"
@@ -56,6 +63,7 @@ const navItems = [
               d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
+        <LanguageToggle />
         <ThemeToggle />
       </div>
     </div>
@@ -69,9 +77,11 @@ const navItems = [
         navItems.map((item) => (
           <a
             href={item.href}
-            class="block py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+            class="mobile-nav-link block py-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+            data-label-de={item.labelDE}
+            data-label-en={item.labelEN}
           >
-            {item.label}
+            <span class="nav-text">{item.labelDE}</span>
           </a>
         ))
       }
@@ -80,25 +90,54 @@ const navItems = [
 </header>
 
 <script>
-  function initMobileMenu() {
+  function initHeader() {
     const menuBtn = document.getElementById("mobile-menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
+    const STORAGE_KEY = "presentation-language";
 
-    if (!menuBtn || menuBtn.dataset.bound === "true") return;
-    menuBtn.dataset.bound = "true";
+    // Mobile menu toggle
+    if (menuBtn && menuBtn.dataset.bound !== "true") {
+      menuBtn.dataset.bound = "true";
 
-    menuBtn.addEventListener("click", () => {
-      mobileMenu?.classList.toggle("hidden");
-    });
-
-    // Close menu when clicking a link
-    mobileMenu?.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.add("hidden");
+      menuBtn.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
       });
+
+      mobileMenu?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+        });
+      });
+    }
+
+    // Language handling for nav links
+    function getLanguage(): "de" | "en" {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored === "en" ? "en" : "de";
+    }
+
+    function updateNavLabels(lang: "de" | "en") {
+      document.querySelectorAll("[data-label-de][data-label-en]").forEach((link) => {
+        const textEl = link.querySelector(".nav-text");
+        if (textEl) {
+          const label = lang === "en" ? link.getAttribute("data-label-en") : link.getAttribute("data-label-de");
+          textEl.textContent = label;
+        }
+      });
+    }
+
+    // Initialize
+    updateNavLabels(getLanguage());
+
+    // Listen for language changes
+    window.addEventListener("languageChange", (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.language) {
+        updateNavLabels(detail.language);
+      }
     });
   }
 
-  initMobileMenu();
-  document.addEventListener("astro:after-swap", initMobileMenu);
+  initHeader();
+  document.addEventListener("astro:after-swap", initHeader);
 </script>

@@ -1,0 +1,64 @@
+---
+// Language toggle component for switching between DE and EN
+---
+
+<button
+  id="language-toggle"
+  class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-mono bg-[var(--ctp-surface0)] hover:bg-[var(--ctp-surface1)] transition-colors border border-[var(--ctp-surface1)]"
+  aria-label="Toggle language"
+>
+  <span id="lang-flag" class="text-base">🇩🇪</span>
+  <span id="lang-code" class="text-[var(--color-text-muted)] uppercase">DE</span>
+</button>
+
+<script>
+  function initLanguageToggle() {
+    const toggle = document.getElementById("language-toggle");
+    const flagEl = document.getElementById("lang-flag");
+    const codeEl = document.getElementById("lang-code");
+
+    if (!toggle || toggle.dataset.bound === "true") return;
+    toggle.dataset.bound = "true";
+
+    const STORAGE_KEY = "presentation-language";
+
+    // Get current language
+    function getLanguage(): "de" | "en" {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored === "en" ? "en" : "de";
+    }
+
+    // Update button display
+    function updateDisplay(lang: "de" | "en") {
+      if (flagEl) flagEl.textContent = lang === "de" ? "🇩🇪" : "🇬🇧";
+      if (codeEl) codeEl.textContent = lang.toUpperCase();
+    }
+
+    // Initialize display
+    updateDisplay(getLanguage());
+
+    // Handle click
+    toggle.addEventListener("click", () => {
+      const current = getLanguage();
+      const newLang = current === "de" ? "en" : "de";
+      localStorage.setItem(STORAGE_KEY, newLang);
+      updateDisplay(newLang);
+
+      // Dispatch event for other components
+      window.dispatchEvent(
+        new CustomEvent("languageChange", { detail: { language: newLang } })
+      );
+    });
+
+    // Listen for external language changes
+    window.addEventListener("languageChange", (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.language) {
+        updateDisplay(detail.language);
+      }
+    });
+  }
+
+  initLanguageToggle();
+  document.addEventListener("astro:after-swap", initLanguageToggle);
+</script>

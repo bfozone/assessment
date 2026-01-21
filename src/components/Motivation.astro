@@ -1,30 +1,42 @@
 ---
-import { presentationData } from "../data/presentation";
+import { presentations, labels } from "../data/presentation";
 
-const { motivation } = presentationData;
+const motivationDE = presentations.de.motivation;
+const motivationEN = presentations.en.motivation;
+const labelsDE = labels.de.motivation;
+const labelsEN = labels.en.motivation;
 
 const sections = [
   {
     id: "motivation-0",
-    title: "What motivates me for this position?",
-    subtitle: "The drive behind my ambition",
-    items: motivation.position,
+    titleDE: labelsDE.sections.position.title,
+    titleEN: labelsEN.sections.position.title,
+    subtitleDE: labelsDE.sections.position.subtitle,
+    subtitleEN: labelsEN.sections.position.subtitle,
+    itemsDE: motivationDE.position,
+    itemsEN: motivationEN.position,
     color: "var(--ctp-green)",
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
   },
   {
     id: "motivation-1",
-    title: "What are my expectations & wishes?",
-    subtitle: "What I hope to find and achieve",
-    items: motivation.expectations,
+    titleDE: labelsDE.sections.expectations.title,
+    titleEN: labelsEN.sections.expectations.title,
+    subtitleDE: labelsDE.sections.expectations.subtitle,
+    subtitleEN: labelsEN.sections.expectations.subtitle,
+    itemsDE: motivationDE.expectations,
+    itemsEN: motivationEN.expectations,
     color: "var(--ctp-blue)",
     icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
   },
   {
     id: "motivation-2",
-    title: "Challenges & what could speak against me?",
-    subtitle: "Honest reflection on potential obstacles",
-    items: motivation.challenges,
+    titleDE: labelsDE.sections.challenges.title,
+    titleEN: labelsEN.sections.challenges.title,
+    subtitleDE: labelsDE.sections.challenges.subtitle,
+    subtitleEN: labelsEN.sections.challenges.subtitle,
+    itemsDE: motivationDE.challenges,
+    itemsEN: motivationEN.challenges,
     color: "var(--ctp-peach)",
     icon: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z",
   },
@@ -37,12 +49,15 @@ const sections = [
     <button
       class="motivation-progress-dot group relative w-3 h-3 rounded-full bg-[var(--ctp-surface2)] transition-all duration-300 hover:bg-[var(--ctp-overlay0)]"
       data-index={index}
-      aria-label={`Go to ${section.title}`}
+      aria-label={`Go to ${section.titleDE}`}
     >
       <span
         class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm text-[var(--color-text-muted)] bg-[var(--color-surface)] px-2 py-1 rounded"
+        data-i18n={`mot-tooltip-${index}`}
+        data-de={`${labelsDE.questionLabel} ${index + 1}`}
+        data-en={`${labelsEN.questionLabel} ${index + 1}`}
       >
-        Question {index + 1}
+        {labelsDE.questionLabel} {index + 1}
       </span>
     </button>
   ))}
@@ -75,14 +90,29 @@ const sections = [
 <!-- Section Header (Full Screen) -->
 <section id="motivation" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 scroll-mt-16">
   <div class="max-w-4xl mx-auto text-center">
-    <p class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4">
-      Part Two
+    <p
+      class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4"
+      data-i18n="mot-part"
+      data-de={labelsDE.partLabel}
+      data-en={labelsEN.partLabel}
+    >
+      {labelsDE.partLabel}
     </p>
-    <h3 class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6">
-      My Motivation
+    <h3
+      class="fade-in text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6"
+      data-i18n="mot-title"
+      data-de={labelsDE.title}
+      data-en={labelsEN.title}
+    >
+      {labelsDE.title}
     </h3>
-    <p class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
-      What drives me, what I expect, and where I see challenges
+    <p
+      class="fade-in text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto"
+      data-i18n="mot-subtitle"
+      data-de={labelsDE.subtitle}
+      data-en={labelsEN.subtitle}
+    >
+      {labelsDE.subtitle}
     </p>
   </div>
 </section>
@@ -122,8 +152,13 @@ const sections = [
               <path stroke-linecap="round" stroke-linejoin="round" d={section.icon} />
             </svg>
           </div>
-          <span class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider">
-            Question {index + 1} of 3
+          <span
+            class="font-mono text-xs text-[var(--ctp-overlay0)] uppercase tracking-wider"
+            data-i18n={`mot-qlabel-${index}`}
+            data-de={`${labelsDE.questionLabel} ${index + 1} von 3`}
+            data-en={`${labelsEN.questionLabel} ${index + 1} of 3`}
+          >
+            {labelsDE.questionLabel} {index + 1} von 3
           </span>
         </div>
 
@@ -131,19 +166,27 @@ const sections = [
         <h3
           class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 leading-tight"
           style={`color: ${section.color};`}
+          data-i18n={`mot-sec-title-${index}`}
+          data-de={section.titleDE}
+          data-en={section.titleEN}
         >
-          {section.title}
+          {section.titleDE}
         </h3>
 
         <!-- Subtitle -->
-        <p class="text-base lg:text-lg text-[var(--color-text-muted)] italic mb-12">
-          {section.subtitle}
+        <p
+          class="text-base lg:text-lg text-[var(--color-text-muted)] italic mb-12"
+          data-i18n={`mot-sec-sub-${index}`}
+          data-de={section.subtitleDE}
+          data-en={section.subtitleEN}
+        >
+          {section.subtitleDE}
         </p>
       </div>
 
       <!-- Statement cards - stacked, centered -->
       <div class="space-y-4 max-w-2xl mx-auto">
-        {section.items.map((item, itemIndex) => (
+        {section.itemsDE.map((item, itemIndex) => (
           <div
             class="motivation-item opacity-0 translate-y-4 transition-all duration-500"
             style={`transition-delay: ${itemIndex * 100 + 200}ms;`}
@@ -159,7 +202,12 @@ const sections = [
                 >
                   {itemIndex + 1}
                 </span>
-                <p class="text-base lg:text-lg text-[var(--color-text)] leading-relaxed pt-1">
+                <p
+                  class="text-base lg:text-lg text-[var(--color-text)] leading-relaxed pt-1"
+                  data-i18n={`mot-item-${index}-${itemIndex}`}
+                  data-de={item}
+                  data-en={section.itemsEN[itemIndex] || item}
+                >
                   {item}
                 </p>
               </div>
@@ -325,6 +373,37 @@ const sections = [
     });
   }
 
+  function initMotivationI18n() {
+    const STORAGE_KEY = "presentation-language";
+
+    function getLanguage(): "de" | "en" {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored === "en" ? "en" : "de";
+    }
+
+    function updateContent(lang: "de" | "en") {
+      document.querySelectorAll("[data-i18n^='mot-']").forEach((el) => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    // Initialize
+    updateContent(getLanguage());
+
+    // Listen for language changes
+    window.addEventListener("languageChange", (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.language) {
+        updateContent(detail.language);
+      }
+    });
+  }
+
   initMotivationScrolling();
-  document.addEventListener('astro:after-swap', initMotivationScrolling);
+  initMotivationI18n();
+  document.addEventListener('astro:after-swap', () => {
+    initMotivationScrolling();
+    initMotivationI18n();
+  });
 </script>
