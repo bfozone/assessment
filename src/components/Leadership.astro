@@ -71,7 +71,7 @@ const sections = [
 </a>
 
 <!-- Section Header (Full Screen) -->
-<section id="leadership" class="min-h-[calc(100dvh-4rem)] flex items-center justify-center px-4 scroll-mt-16">
+<section id="leadership" class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 scroll-mt-16">
   <div class="max-w-4xl mx-auto text-center">
     <p class="fade-in font-mono text-sm text-[var(--ctp-mauve)] uppercase tracking-widest mb-4">
       Part Three
@@ -87,14 +87,14 @@ const sections = [
 
 <!-- Section 1: Leadership Principles (Manifesto Style) -->
 <section
-  class="leadership-section min-h-[calc(100dvh-4rem)] flex items-center justify-center px-4 py-12 lg:py-16 relative scroll-mt-16"
+  class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="0"
   id="leadership-0"
 >
   <!-- Background accent -->
   <div
     class="absolute inset-0 opacity-0 transition-opacity duration-1000 pointer-events-none"
-    style="background: radial-gradient(ellipse at 50% 50%, var(--ctp-mauve)10, transparent 70%);"
+    style="background: radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--ctp-mauve) 10%, transparent), transparent 50%), radial-gradient(ellipse at 70% 60%, color-mix(in srgb, var(--ctp-mauve) 6%, transparent), transparent 60%);"
     data-bg
   />
 
@@ -169,14 +169,14 @@ const sections = [
 
 <!-- Section 2: What Attracts Me (Manifesto Style) -->
 <section
-  class="leadership-section min-h-[calc(100dvh-4rem)] flex items-center justify-center px-4 py-12 lg:py-16 relative scroll-mt-16"
+  class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="1"
   id="leadership-1"
 >
   <!-- Background accent -->
   <div
     class="absolute inset-0 opacity-0 transition-opacity duration-1000 pointer-events-none"
-    style="background: radial-gradient(ellipse at 50% 50%, var(--ctp-green)10, transparent 70%);"
+    style="background: radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--ctp-green) 10%, transparent), transparent 50%), radial-gradient(ellipse at 70% 60%, color-mix(in srgb, var(--ctp-green) 6%, transparent), transparent 60%);"
     data-bg
   />
 
@@ -241,14 +241,14 @@ const sections = [
 
 <!-- Section 3: Contrast Layout (My Style vs Not My Style) -->
 <section
-  class="leadership-section min-h-[calc(100dvh-4rem)] flex items-center justify-center px-4 py-12 lg:py-16 relative scroll-mt-16"
+  class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="2"
   id="leadership-2"
 >
   <!-- Background accent -->
   <div
     class="absolute inset-0 opacity-0 transition-opacity duration-1000 pointer-events-none"
-    style="background: radial-gradient(ellipse at 50% 50%, var(--ctp-peach)10, transparent 70%);"
+    style="background: radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--ctp-peach) 10%, transparent), transparent 50%), radial-gradient(ellipse at 70% 60%, color-mix(in srgb, var(--ctp-peach) 6%, transparent), transparent 60%);"
     data-bg
   />
 
@@ -438,14 +438,15 @@ const sections = [
               }
             });
 
-            // Update scroll arrow href
+            // Update scroll arrow - hide on last section
             if (scrollArrow) {
               const nextIndex = index + 1;
               if (nextIndex < sections.length) {
                 scrollArrow.setAttribute('href', `#leadership-${nextIndex}`);
+                scrollArrow.style.display = 'block';
               } else {
-                scrollArrow.setAttribute('href', '#hero');
-                scrollArrow.setAttribute('aria-label', 'Back to top');
+                // Hide arrow on last section
+                scrollArrow.style.display = 'none';
               }
             }
           }
@@ -469,7 +470,11 @@ const sections = [
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (scrollArrow) scrollArrow.style.display = 'block';
+            const index = parseInt(entry.target.getAttribute('data-index') || '0');
+            // Only show arrow if not on last section
+            if (scrollArrow && index < sections.length - 1) {
+              scrollArrow.style.display = 'block';
+            }
             if (progressContainer) progressContainer.style.display = 'flex';
           }
         });
