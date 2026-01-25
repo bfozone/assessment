@@ -99,7 +99,7 @@ export interface UILabels {
 const presentationDE: PresentationData = {
   hero: {
     title: "Selbstpräsentation & Führungsprofil",
-    subtitle: "Head Investment Performance and Risk Control",
+    subtitle: "Head Investment Performance and Risk Control at BLKB",
     name: "Benjamin Fink",
   },
 
@@ -306,7 +306,7 @@ const presentationDE: PresentationData = {
 const presentationEN: PresentationData = {
   hero: {
     title: "Self-Presentation & Leadership Profile",
-    subtitle: "Head Investment Performance and Risk Control",
+    subtitle: "Head Investment Performance and Risk Control at BLKB",
     name: "Benjamin Fink",
   },
 
