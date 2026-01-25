@@ -37,6 +37,7 @@ export interface PresentationData {
     title: string;
     subtitle: string;
     name: string;
+    context: string;
   };
   pitch: PitchCategory[];
   motivation: Motivation;
@@ -99,8 +100,9 @@ export interface UILabels {
 const presentationDE: PresentationData = {
   hero: {
     title: "Selbstpräsentation & Führungsprofil",
-    subtitle: "Head Investment Performance and Risk Control at BLKB",
+    subtitle: "Fachleader Investment Performance und Risk Controlling",
     name: "Benjamin Fink",
+    context: "Leadership Assessment | 27. Januar 2026",
   },
 
   pitch: [
@@ -144,22 +146,17 @@ const presentationDE: PresentationData = {
             "Verantwortungsbewusstsein, Prioritätensetzung und Geduld nachhaltig gestärkt",
         },
         {
-          point: "Aufbau BAM ONE Plattform",
+          point: "Aufbau von Risiko-Analytics-Plattformen",
           detail:
-            "Von Konzept bis Produktion – von FINMA als vorbildlich gelobt",
+            "Zweimal von Grund auf konzipiert und in Produktion gebracht",
         },
         {
-          point: "Internationale Karriere",
+          point: "Stellvertretende Führungsverantwortung",
           detail:
-            "Monaco → Zürich → Basel: Anpassungsfähigkeit in unterschiedlichen Kulturen",
+            "Strategischer Weitblick und Einblick in Gesamtsteuerung",
         },
         {
-          point: "Stellvertretende CRO-Funktion",
-          detail:
-            "Erste strategische Führungsverantwortung mit Einblick in Gesamtsteuerung",
-        },
-        {
-          point: "Fachliche Führung Junior Analysts",
+          point: "Fachliche Führung von Mitarbeitenden",
           detail: "Menschen entwickeln, Qualität sichern, Wissen weitergeben",
         },
       ],
@@ -182,10 +179,6 @@ const presentationDE: PresentationData = {
           point: "Brücke zwischen Tech & Business",
           detail:
             "Tiefes Verständnis für Geschäftsprozesse kombiniert mit technischer Expertise",
-        },
-        {
-          point: "Ruhiges, zugängliches Auftreten",
-          detail: "Schaffe anregendes Arbeitsklima das Zusammenarbeit intensiviert",
         },
         {
           point: "Qualitätsbewusstsein",
@@ -212,11 +205,11 @@ const presentationDE: PresentationData = {
         {
           point: "Detailtiefe",
           detail:
-            "Themen sehr tief durchdringen – Aufwand und Wirkung besser balancieren",
+            "Themen sehr tief durchdringen, Aufwand und Wirkung besser balancieren",
         },
         {
           point: "Strategisches Management",
-          detail: "Führungs- und strategische Managementthemen weiter vertiefen",
+          detail: "Führungsthemen und strategische Managementthemen weiter vertiefen",
         },
       ],
     },
@@ -251,21 +244,20 @@ const presentationDE: PresentationData = {
 
   motivation: {
     position: [
-      "Gestaltungsmöglichkeit in einer Führungsrolle mit klarem Wirkungsfeld",
-      "Komplexe analytische Herausforderungen im Investment Performance & Risk Bereich",
-      "Aufbau und Entwicklung eines spezialisierten Teams",
-      "Brücke zwischen regulatorischen Anforderungen und Business-Bedürfnissen",
+      "Führungsverantwortung mit klarem Wirkungsfeld",
+      "Komplexe analytische Herausforderungen im Investment Performance und Risk Controlling",
+      "Stärkung und Förderung eines bestehenden Teams",
+      "Skalierbares Fundament für datenbasierte Entscheidungen",
     ],
     expectations: [
       "Gestaltungsfreiraum in einer kleineren Organisation",
       "Offene Feedbackkultur und gegenseitiger Austausch",
-      "Unterstützung bei der Umsetzung von Veränderungen",
-      "Ausgewogene Balance zwischen Familie und Beruf",
+      "Klare Mandate für notwendige Veränderungen",
     ],
     challenges: [
+      "Erste formelle Teamleitungsposition",
       "Hoher Qualitätsanspruch kann zu Zeitdruck führen",
       "Tendenz, Verantwortung selbst zu übernehmen statt früh zu delegieren",
-      "Noch keine formelle Teamleitung – bisher stellvertretende Führung",
     ],
   },
 
@@ -275,24 +267,24 @@ const presentationDE: PresentationData = {
       "Transparenz schafft Vertrauen",
       "Klare Anweisungen mit Raum für Eigenverantwortung",
       "Menschen entwickeln, nicht nur Aufgaben verwalten",
-      "Ergebnisse zählen mehr als Aktivität",
+      "Faktenbasierte Entscheidungen statt Bauchgefühl",
     ],
     style:
-      "Ich praktiziere einen partizipativen Führungsstil mit klarer Ergebnisorientierung. Ich setze den Rahmen und vertraue meinem Team, innerhalb dieser Grenzen eigenverantwortlich zu arbeiten. Offene Kommunikation, regelmässiges Feedback in beide Richtungen und ein anregendes Arbeitsklima sind mir wichtig.",
+      "Ich stehe für einen partizipativen, faktenbasierten Führungsstil mit klarer Ergebnisorientierung. Ich setze den Rahmen und vertraue darauf, dass mein Team innerhalb dieser Grenzen eigenverantwortlich arbeitet. Offene Kommunikation, regelmässiges Feedback in beide Richtungen und ein anregendes Arbeitsklima sind mir wichtig.",
     appeal: [
       "Menschen fördern und ihr Wachstum begleiten",
-      "Einfluss auf strategische Entscheidungen",
+      "Methoden und Prozesse aktiv weiterentwickeln",
       "Komplexe Herausforderungen gemeinsam meistern",
       "Brücken bauen zwischen Teams und Stakeholdern",
     ],
     notMyStyle: [
       {
         style: "Mikromanagement",
-        reason: "Verhindert Ownership und demotiviert",
+        reason: "Untergräbt Eigenverantwortung und Vertrauen",
       },
       {
         style: "Autoritärer Stil",
-        reason: "Unterdrückt Innovation und Engagement",
+        reason: "Blockiert Offenheit und eigenständiges Denken",
       },
       {
         style: "Laissez-faire",
@@ -306,8 +298,9 @@ const presentationDE: PresentationData = {
 const presentationEN: PresentationData = {
   hero: {
     title: "Self-Presentation & Leadership Profile",
-    subtitle: "Head Investment Performance and Risk Control at BLKB",
+    subtitle: "Team Lead Investment Performance and Risk Controlling",
     name: "Benjamin Fink",
+    context: "Leadership Assessment | January 27, 2026",
   },
 
   pitch: [
@@ -351,22 +344,17 @@ const presentationEN: PresentationData = {
             "Sustainably strengthened sense of responsibility, prioritization, and patience",
         },
         {
-          point: "Building BAM ONE Platform",
+          point: "Building risk analytics platforms",
           detail:
-            "From concept to production – praised as exemplary by FINMA",
+            "Designed and delivered to production twice from the ground up",
         },
         {
-          point: "International career",
+          point: "Deputy leadership responsibility",
           detail:
-            "Monaco → Zurich → Basel: Adaptability across different cultures",
+            "Strategic foresight and insight into overall governance",
         },
         {
-          point: "Deputy CRO function",
-          detail:
-            "First strategic leadership responsibility with insight into overall governance",
-        },
-        {
-          point: "Technical leadership of Junior Analysts",
+          point: "Technical leadership of team members",
           detail: "Developing people, ensuring quality, sharing knowledge",
         },
       ],
@@ -389,10 +377,6 @@ const presentationEN: PresentationData = {
           point: "Bridge between Tech & Business",
           detail:
             "Deep understanding of business processes combined with technical expertise",
-        },
-        {
-          point: "Calm, approachable demeanor",
-          detail: "Creating a stimulating work climate that intensifies collaboration",
         },
         {
           point: "Quality consciousness",
@@ -419,7 +403,7 @@ const presentationEN: PresentationData = {
         {
           point: "Depth of detail",
           detail:
-            "Diving very deep into topics – better balancing effort and impact",
+            "Diving very deep into topics, better balancing effort and impact",
         },
         {
           point: "Strategic management",
@@ -458,21 +442,20 @@ const presentationEN: PresentationData = {
 
   motivation: {
     position: [
-      "Opportunity to shape a leadership role with clear scope of impact",
-      "Complex analytical challenges in Investment Performance & Risk",
-      "Building and developing a specialized team",
-      "Bridge between regulatory requirements and business needs",
+      "Leadership responsibility with clear scope of impact",
+      "Complex analytical challenges in Investment Performance and Risk Controlling",
+      "Strengthening and developing an existing team",
+      "Creating scalable, data-driven decision foundations",
     ],
     expectations: [
       "Creative freedom in a smaller organization",
       "Open feedback culture and mutual exchange",
-      "Support in implementing changes",
-      "Balanced work-life harmony with family",
+      "Clear mandates for necessary changes",
     ],
     challenges: [
+      "First formal team leadership position",
       "High quality standards can lead to time pressure",
       "Tendency to take responsibility myself rather than delegating early",
-      "No formal team leadership yet – deputy leadership so far",
     ],
   },
 
@@ -482,24 +465,24 @@ const presentationEN: PresentationData = {
       "Transparency builds trust",
       "Clear direction with room for autonomy",
       "Develop people, not just manage tasks",
-      "Results matter more than activity",
+      "Fact-based decisions over gut feeling",
     ],
     style:
-      "I practice a participative leadership style with clear results orientation. I set the framework and trust my team to work autonomously within these boundaries. Open communication, regular two-way feedback, and a stimulating work environment are important to me.",
+      "I stand for a participative, fact-based leadership style with clear results orientation. I set the framework and trust that my team works autonomously within these boundaries. Open communication, regular two-way feedback, and a stimulating work environment are important to me.",
     appeal: [
       "Developing people and supporting their growth",
-      "Influence on strategic decisions",
+      "Actively advancing methods and processes",
       "Mastering complex challenges together",
       "Building bridges between teams and stakeholders",
     ],
     notMyStyle: [
       {
         style: "Micromanagement",
-        reason: "Prevents ownership and demotivates",
+        reason: "Undermines autonomy and trust",
       },
       {
         style: "Authoritarian style",
-        reason: "Suppresses innovation and engagement",
+        reason: "Blocks openness and independent thinking",
       },
       {
         style: "Laissez-faire",
@@ -571,8 +554,8 @@ const labelsDE: UILabels = {
         subtitle: "Die Aspekte die mich begeistern",
       },
       notMyStyle: {
-        title: "Führungsstile die nicht zu mir passen",
-        subtitle: "Was ich bewusst anders mache",
+        title: "Meine Abgrenzung",
+        subtitle: "Was ich nicht tue und woran ich stattdessen glaube",
       },
     },
   },
@@ -643,8 +626,8 @@ const labelsEN: UILabels = {
         subtitle: "The aspects that excite me",
       },
       notMyStyle: {
-        title: "Leadership styles that don't fit me",
-        subtitle: "What I consciously do differently",
+        title: "My Boundaries",
+        subtitle: "What I don't do and what I believe in instead",
       },
     },
   },

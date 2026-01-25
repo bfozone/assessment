@@ -37,18 +37,16 @@ const sections = [
   },
 ];
 
-// Static text for the contrast section
-const believeItemsDE = [
-  "Teams mit Vertrauen und Autonomie stärken",
-  "Klare Richtung mit Raum für Initiative",
-  "Offener Dialog und gegenseitiges Feedback",
-  "Ergebnisse durch Zusammenarbeit",
+// Matched contrast pairs: notMyStyle → believe (3 pairs)
+const contrastPairsDE = [
+  "Vertrauen und Raum für Eigenverantwortung",
+  "Offenheit und transparente Kommunikation",
+  "Klare Richtung mit aktivem Vorleben",
 ];
-const believeItemsEN = [
-  "Empower teams with trust and autonomy",
-  "Clear direction with room for initiative",
-  "Open dialogue and mutual feedback",
-  "Results through collaboration",
+const contrastPairsEN = [
+  "Trust and room for autonomy",
+  "Openness and transparent communication",
+  "Clear direction with leading by example",
 ];
 ---
 
@@ -190,19 +188,12 @@ const believeItemsEN = [
     <div class="space-y-6">
       {leadershipDE.principles.map((principle, index) => (
         <div
-          class="leadership-item manifesto-item opacity-0 translate-y-4 transition-all duration-500"
+          class="leadership-item manifesto-item opacity-0 translate-y-4 transition-all duration-500 pl-4"
           style={`transition-delay: ${index * 150 + 200}ms;`}
         >
-          <div class="relative pl-8 lg:pl-12">
-            <!-- Large quotation mark -->
-            <span
-              class="absolute left-0 top-0 text-4xl lg:text-5xl font-serif leading-none opacity-30"
-              style="color: var(--ctp-mauve);"
-            >
-              "
-            </span>
+          <div class="relative">
             <p
-              class="text-xl sm:text-2xl lg:text-3xl font-semibold text-[var(--color-text)] leading-relaxed"
+              class="text-base lg:text-lg font-semibold text-[var(--color-text)] leading-relaxed"
               data-i18n={`lead-principle-${index}`}
               data-de={principle}
               data-en={leadershipEN.principles[index] || principle}
@@ -319,7 +310,7 @@ const believeItemsEN = [
                 {index + 1}
               </span>
               <p
-                class="text-lg sm:text-xl lg:text-2xl font-medium text-[var(--color-text)]"
+                class="text-base lg:text-lg font-medium text-[var(--color-text)]"
                 data-i18n={`lead-appeal-${index}`}
                 data-de={item}
                 data-en={leadershipEN.appeal[index] || item}
@@ -334,7 +325,7 @@ const believeItemsEN = [
   </div>
 </section>
 
-<!-- Section 3: Contrast Layout (My Style vs Not My Style) -->
+<!-- Section 3: Contrast Layout (Not My Style → What I Believe) -->
 <section
   class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="2"
@@ -343,7 +334,7 @@ const believeItemsEN = [
   <!-- Background accent -->
   <div
     class="absolute inset-0 opacity-0 transition-opacity duration-1000 pointer-events-none"
-    style="background: radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--ctp-peach) 10%, transparent), transparent 50%), radial-gradient(ellipse at 70% 60%, color-mix(in srgb, var(--ctp-peach) 6%, transparent), transparent 60%);"
+    style="background: radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--ctp-peach) 10%, transparent), transparent 50%), radial-gradient(ellipse at 70% 60%, color-mix(in srgb, var(--ctp-green) 6%, transparent), transparent 60%);"
     data-bg
   />
 
@@ -394,92 +385,76 @@ const believeItemsEN = [
       </p>
     </div>
 
-    <!-- Contrast Grid -->
-    <div class="grid lg:grid-cols-2 gap-6 lg:gap-8">
-      <!-- Left: What I Believe (Positive) -->
-      <div
-        class="leadership-item opacity-0 -translate-x-8 transition-all duration-700"
-        style="transition-delay: 200ms;"
-      >
-        <div class="h-full bg-[var(--color-surface)] rounded-2xl p-6 lg:p-8 border-2 border-[var(--ctp-green)]">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-full bg-[var(--ctp-green)] flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h4
-              class="text-xl lg:text-2xl font-bold text-[var(--ctp-green)]"
-              data-i18n="lead-believe-title"
-              data-de="Woran ich glaube"
-              data-en="What I believe in"
-            >
-              Woran ich glaube
-            </h4>
-          </div>
-          <ul class="space-y-4">
-            {believeItemsDE.map((item, index) => (
-              <li class="flex items-start gap-3">
-                <span class="w-2 h-2 rounded-full bg-[var(--ctp-green)] mt-2 flex-shrink-0"></span>
-                <span
-                  class="text-base lg:text-lg text-[var(--color-text)]"
-                  data-i18n={`lead-believe-${index}`}
-                  data-de={item}
-                  data-en={believeItemsEN[index]}
-                >
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+    <!-- Contrast Pairs (Row-based) -->
+    <div class="space-y-4 lg:space-y-6">
+      {leadershipDE.notMyStyle.map((item, index) => (
+        <div
+          class="leadership-item opacity-0 translate-y-4 transition-all duration-500"
+          style={`transition-delay: ${index * 200 + 200}ms;`}
+        >
+          <div class="bg-[var(--color-surface)] rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-[var(--ctp-surface1)]">
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 lg:gap-6 items-center">
+              <!-- Left: What doesn't fit (Negative) -->
+              <div class="flex items-start gap-3 lg:gap-4">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[var(--ctp-peach)] flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="font-semibold text-base lg:text-lg text-[var(--ctp-peach)]"
+                    data-i18n={`lead-notfit-style-${index}`}
+                    data-de={item.style}
+                    data-en={leadershipEN.notMyStyle[index]?.style || item.style}
+                  >
+                    {item.style}
+                  </p>
+                  <p
+                    class="text-sm text-[var(--ctp-subtext0)]"
+                    data-i18n={`lead-notfit-reason-${index}`}
+                    data-de={item.reason}
+                    data-en={leadershipEN.notMyStyle[index]?.reason || item.reason}
+                  >
+                    {item.reason}
+                  </p>
+                </div>
+              </div>
 
-      <!-- Right: What I Don't Identify With (Negative) -->
-      <div
-        class="leadership-item opacity-0 translate-x-8 transition-all duration-700"
-        style="transition-delay: 400ms;"
-      >
-        <div class="h-full bg-[var(--color-surface)] rounded-2xl p-6 lg:p-8 border-2 border-[var(--ctp-peach)]">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-full bg-[var(--ctp-peach)] flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <!-- Arrow (hidden on mobile, visible on lg) -->
+              <div class="hidden lg:flex items-center justify-center">
+                <svg class="w-8 h-8 text-[var(--ctp-overlay0)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </div>
+
+              <!-- Right: What I believe instead (Positive) -->
+              <div class="flex items-start gap-3 lg:gap-4 lg:justify-end">
+                <div class="lg:hidden flex-shrink-0 w-10 h-10 rounded-full bg-[var(--ctp-green)] flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div class="lg:text-right">
+                  <p
+                    class="font-semibold text-base lg:text-lg text-[var(--ctp-green)]"
+                    data-i18n={`lead-believe-${index}`}
+                    data-de={contrastPairsDE[index]}
+                    data-en={contrastPairsEN[index]}
+                  >
+                    {contrastPairsDE[index]}
+                  </p>
+                </div>
+                <div class="hidden lg:flex flex-shrink-0 w-10 h-10 rounded-full bg-[var(--ctp-green)] items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
             </div>
-            <h4
-              class="text-xl lg:text-2xl font-bold text-[var(--ctp-peach)]"
-              data-i18n="lead-notfit-title"
-              data-de="Was nicht passt"
-              data-en="What doesn't fit"
-            >
-              Was nicht passt
-            </h4>
           </div>
-          <ul class="space-y-5">
-            {leadershipDE.notMyStyle.map((item, index) => (
-              <li class="border-b border-[var(--ctp-surface1)] pb-4 last:border-0 last:pb-0">
-                <p
-                  class="font-semibold text-base lg:text-lg text-[var(--color-text)] mb-1"
-                  data-i18n={`lead-notfit-style-${index}`}
-                  data-de={item.style}
-                  data-en={leadershipEN.notMyStyle[index]?.style || item.style}
-                >
-                  {item.style}
-                </p>
-                <p
-                  class="text-sm lg:text-base text-[var(--ctp-subtext0)]"
-                  data-i18n={`lead-notfit-reason-${index}`}
-                  data-de={item.reason}
-                  data-en={leadershipEN.notMyStyle[index]?.reason || item.reason}
-                >
-                  {item.reason}
-                </p>
-              </li>
-            ))}
-          </ul>
         </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
