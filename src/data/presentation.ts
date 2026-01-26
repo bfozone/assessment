@@ -168,7 +168,7 @@ const presentationDE: PresentationData = {
       items: [
         {
           point: "Komplexität strukturieren",
-          detail: "Komplexe Risiko- und Systemzusammenhänge verständlich aufbereiten",
+          detail: "Komplexe Risiko und Systemzusammenhänge verständlich aufbereiten",
         },
         {
           point: "Anforderungen in Lösungen übersetzen",
