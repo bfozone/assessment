@@ -80,13 +80,22 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 64px;
-  scroll-snap-type: y proximity;
 }
 
 /* Scroll offset for fixed header */
 section[id] {
   scroll-margin-top: 64px;
-  scroll-snap-align: start;
+}
+
+/* Enable scroll-snap only on desktop - mobile has issues with touch scrolling */
+@media (min-width: 1024px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  section[id] {
+    scroll-snap-align: start;
+  }
 }
 
 body {

@@ -126,7 +126,7 @@ const contrastPairsEN = [
 
 <!-- Section 1: Leadership Principles (Manifesto Style) -->
 <section
-  class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
+  class="leadership-section min-h-[75dvh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="0"
   id="leadership-0"
 >
@@ -234,7 +234,7 @@ const contrastPairsEN = [
 
 <!-- Section 2: What Attracts Me (Manifesto Style) -->
 <section
-  class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
+  class="leadership-section min-h-[75dvh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="1"
   id="leadership-1"
 >
@@ -327,7 +327,7 @@ const contrastPairsEN = [
 
 <!-- Section 3: Contrast Layout (Not My Style → What I Believe) -->
 <section
-  class="leadership-section min-h-[75vh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
+  class="leadership-section min-h-[75dvh] flex items-center justify-center px-4 py-8 lg:py-12 relative scroll-mt-16"
   data-index="2"
   id="leadership-2"
 >
@@ -529,6 +529,11 @@ const contrastPairsEN = [
       headerObserver.observe(leadershipHeader);
     }
 
+    // Adjust observer thresholds for mobile vs desktop
+    const isMobile = window.innerWidth < 768;
+    const observerThreshold = isMobile ? 0.15 : 0.3;
+    const observerRootMargin = isMobile ? '-10% 0px -10% 0px' : '-20% 0px -20% 0px';
+
     // Intersection Observer for sections
     const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -564,8 +569,8 @@ const contrastPairsEN = [
         });
       },
       {
-        threshold: 0.3,
-        rootMargin: '-20% 0px -20% 0px'
+        threshold: observerThreshold,
+        rootMargin: observerRootMargin
       }
     );
 
@@ -590,7 +595,7 @@ const contrastPairsEN = [
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: observerThreshold }
     );
 
     sections.forEach((section) => showObserver.observe(section));
